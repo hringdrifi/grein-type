@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# Grein Type — 再生の枝 —
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 「言葉が、世界を再生する。」
+北欧神話をモチーフにした、シネマティック・サバイバルタイピングゲーム。
 
-Currently, two official plugins are available:
+**[🎮 今すぐプレイする](https://hringdrifi.github.io/grein-type/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌲 コンセプト
+灰に包まれた世界で、あなたは唯一の希望である「世界樹（ユグドラシル）」の芽を育てる守護者となります。
+タイピングによって紡がれる言葉が、枯れゆく木に生命を吹き込み、新たな枝を伸ばし、やがて庭園に平和な調べを呼び戻します。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ 特徴
+- **プロシージャル・ツリー生成**: あなたのタイピングに応じて、世界樹は毎回異なる姿へと成長します。
+- **シネマティックな演出**: 滅びと再生を象徴するオープニングムービーと、没入感を高める視覚効果。
+- **動的なオーディオシステム**: タイピングの成功、ミス、生命の衰退に合わせた臨場感あふれるサウンド。
+- **称号システム**: プレイ内容に応じて、北欧神話にちなんだ多様な称号を獲得できます。
+- **SNS共有**: 育てた世界樹の記録を、すぐにSNSへシェア可能。
 
-## Expanding the ESLint configuration
+## 🛠 テクノロジー
+- **Engine**: PixiJS (WebGL/WebGPU)
+- **Framework**: React + Vite
+- **Language**: TypeScript
+- **Audio**: Web Audio API
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📜 開発の進め方
+### ローカル開発
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### デプロイ
+```bash
+npm run deploy
 ```
+
+## 📜 ライセンス
+MIT License - Copyright (c) 2026 hringdrifi
