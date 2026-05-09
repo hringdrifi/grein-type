@@ -87,6 +87,20 @@ export const GameCanvas = ({ gameState, unlockedTitlesCount, onAscensionComplete
         return () => window.removeEventListener('request-ascension', handleRequestAscension);
     }, [onAscensionComplete]);
 
+    // ゲームオーバー時のキャプチャ要求
+    useEffect(() => {
+        const handleGameOver = async () => {
+            if (engineRef.current && engineRef.current.isInitialized) {
+                // キャプチャ実行
+                const imgData = await engineRef.current.captureTree();
+                window.dispatchEvent(new CustomEvent('tree-captured', { detail: imgData }));
+            }
+        };
+
+        window.addEventListener('game-over', handleGameOver);
+        return () => window.removeEventListener('game-over', handleGameOver);
+    }, []);
+
     return (
         <div 
             ref={containerRef} 

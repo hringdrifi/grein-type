@@ -155,6 +155,7 @@ export class WorldTree {
     private time: number = 0;
     private maxGeneration: number = 0; // 追加: 称号判定用の最大深度
     private currentInput: string = ""; // 現在の入力内容を保持
+    private appRenderer: any = null; // レンダラーを保持（キャプチャ用）
     
     public vitality: number = 60; // 木の生命力（残り時間）
     public maxVitality: number = 60;
@@ -192,6 +193,10 @@ export class WorldTree {
             }
         });
 
+    }
+
+    public setRenderer(renderer: any) {
+        this.appRenderer = renderer;
     }
 
     public clear() {
@@ -232,6 +237,43 @@ export class WorldTree {
     /**
      * 木を光にして天に還すエフェクトを開始する
      */
+    /**
+     * 木のシルエットをキャプチャしてDataURLを返す
+     */
+    public async captureTreeSilhouette(): Promise<string> {
+        if (!this.appRenderer) return "";
+
+        // キャプチャ用に一時的に状態を調整
+        const originalTextVisibility = this.nodesContainer.visible;
+
+        // テキストを非表示にする（シルエットのみ）
+        this.nodesContainer.visible = false;
+
+        // 全体を捉えるために境界を計算（必要に応じて将来的にズーム調整に使用可能）
+        // let minX = 0, maxX = 0, minY = 0, maxY = 0;
+        // this.nodes.forEach(n => {
+        //     minX = Math.min(minX, n.x);
+        //     maxX = Math.max(maxX, n.x);
+        //     minY = Math.min(minY, n.y);
+        //     maxY = Math.max(maxY, n.y);
+        // });
+
+        // キャプチャ実行
+        try {
+            const canvas = await this.appRenderer.extract.canvas(this.container);
+            const dataUrl = canvas.toDataURL("image/png");
+            
+            // 元に戻す
+            this.nodesContainer.visible = originalTextVisibility;
+            
+            return dataUrl;
+        } catch (e) {
+            console.error("Capture failed", e);
+            this.nodesContainer.visible = originalTextVisibility;
+            return "";
+        }
+    }
+
     public triggerAscension(callback: () => void) {
         if (this.isAscending) return;
         this.isAscending = true;

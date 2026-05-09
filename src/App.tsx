@@ -27,6 +27,7 @@ function App() {
     bonus: 0
   });
   const [sessionMaxDepth, setSessionMaxDepth] = useState(0); // 追加: 今回のプレイの最大深度
+  const [treeImage, setTreeImage] = useState<string | null>(null); // 追加: キャプチャした世界樹の画像
 
   // 統計用の状態
 
@@ -112,6 +113,10 @@ function App() {
       audioManager.playSE('ascension');
     };
 
+    const handleTreeCaptured = (e: any) => {
+      setTreeImage(e.detail);
+    };
+
     const triggerDamage = () => {
       setIsDamaged(true);
       setTimeout(() => setIsDamaged(false), 200);
@@ -123,6 +128,7 @@ function App() {
     window.addEventListener('typing-error', handleTypingError);
     window.addEventListener('game-over', handleGameOver);
     window.addEventListener('request-ascension', handleAscensionRequest);
+    window.addEventListener('tree-captured', handleTreeCaptured);
 
     return () => {
       window.removeEventListener('clear-input', handleClear);
@@ -131,6 +137,7 @@ function App() {
       window.removeEventListener('typing-error', handleTypingError);
       window.removeEventListener('game-over', handleGameOver);
       window.removeEventListener('request-ascension', handleAscensionRequest);
+      window.removeEventListener('tree-captured', handleTreeCaptured);
     };
   }, [initAudio]);
 
@@ -220,6 +227,106 @@ function App() {
     const text = `Grein Type — ユグドラシルの芽 — で世界樹を育てました！\nスコア: ${score.toLocaleString()}\nWPM: ${lastSessionStats.wpm} | 正確率: ${lastSessionStats.accuracy}%\n#GreinType #タイピングゲーム\n`;
     const url = "https://hringdrifi.github.io/grein-type/";
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
+  // 画像として保存機能
+  const handleDownloadImage = () => {
+    if (!treeImage) return;
+
+    // キャンバスを作成して合成
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 背景（グラデーション）
+    const grad = ctx.createLinearGradient(0, 0, 0, 630);
+    grad.addColorStop(0, '#0a0f1a');
+    grad.addColorStop(1, '#1a2533');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // 装飾的な円（オーロラ風）
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = '#4facfe';
+    ctx.beginPath();
+    ctx.arc(1000, 100, 300, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#00f2fe';
+    ctx.beginPath();
+    ctx.arc(200, 500, 400, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1.0;
+
+    // テキスト描画
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 40px "Inter", sans-serif';
+    ctx.fillText('Grein Type', 60, 80);
+    ctx.font = '20px "Inter", sans-serif';
+    ctx.fillText('— 再生の記憶 —', 280, 75);
+
+    // スコア情報
+    ctx.font = 'bold 120px "Inter", sans-serif';
+    ctx.fillStyle = '#e0ffff';
+    ctx.fillText(score.toLocaleString(), 60, 240);
+    ctx.font = '24px "Inter", sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.fillText('FINAL SCORE', 65, 140);
+
+    // 統計
+    ctx.font = '20px "Inter", sans-serif';
+    ctx.fillText('WPM', 65, 300);
+    ctx.font = 'bold 40px "Inter", sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(lastSessionStats.wpm.toString(), 65, 350);
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.font = '20px "Inter", sans-serif';
+    ctx.fillText('ACCURACY', 220, 300);
+    ctx.font = 'bold 40px "Inter", sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${lastSessionStats.accuracy}%`, 220, 350);
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.font = '20px "Inter", sans-serif';
+    ctx.fillText('MAX DEPTH', 450, 300);
+    ctx.font = 'bold 40px "Inter", sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${sessionMaxDepth} Layers`, 450, 350);
+
+    // 称号
+    ctx.font = '18px "Inter", sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    lastSessionStats.newTitles.slice(0, 3).forEach((title, i) => {
+      ctx.fillText(`称号: ${title}`, 65, 420 + i * 35);
+    });
+
+    // 世界樹の画像を合成
+    const img = new Image();
+    img.onload = () => {
+      // 木を右側に配置
+      const treeScale = 0.8;
+      const tw = img.width * treeScale;
+      const th = img.height * treeScale;
+      // グロー効果
+      ctx.shadowBlur = 40;
+      ctx.shadowColor = 'rgba(224, 255, 255, 0.5)';
+      ctx.drawImage(img, 1100 - tw, 315 - th / 2, tw, th);
+      ctx.shadowBlur = 0;
+
+      // フッター
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.font = '16px "Inter", sans-serif';
+      ctx.fillText('hringdrifi.github.io/grein-type/', 65, 580);
+
+      // ダウンロード
+      const link = document.createElement('a');
+      link.download = `grein-type-result-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+    img.src = treeImage;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -335,64 +442,75 @@ function App() {
         {/* ゲームオーバー画面（タイムアップ・記憶の登録） */}
         {gameState === 'gameover' && (
           <div className="scene-container gameover-scene">
-            <header>
-              <h1 className="timeup-title">Time Up</h1>
-              <p className="subtitle">生命力が尽き、大樹は夜空の記憶となった…</p>
+            <div className="result-ethereal-bg"></div>
+            
+            <header className="result-header">
+              <h1 className="timeup-title">Night Sky Memory</h1>
+              <p className="subtitle">生命力は夜空へと還り、一時の記憶を刻む…</p>
             </header>
+  
+            <main className="result-main-enhanced">
+              <div className="tree-silhouette-container">
+                {treeImage ? (
+                  <img src={treeImage} alt="Your World Tree" className="tree-silhouette" />
+                ) : (
+                  <div className="tree-loading">Capturing the tree...</div>
+                )}
+                <div className="tree-glow"></div>
+              </div>
 
-            <main className="result-main">
-              <div className="result-grid">
-                <div className="result-item score-hero">
+              <div className="result-stats-panel">
+                <div className="result-item-main">
                   <span className="label">FINAL SCORE</span>
-                  <span className="value score-animate">{score.toLocaleString()}</span>
+                  <span className="value score-large">{score.toLocaleString()}</span>
                 </div>
-
-                <div className="result-stats-row">
-                  <div className="result-item">
+  
+                <div className="stats-grid-compact">
+                  <div className="stat-box">
                     <span className="label">WPM</span>
                     <span className="value">{lastSessionStats.wpm}</span>
                   </div>
-                  <div className="result-item">
+                  <div className="stat-box">
                     <span className="label">ACCURACY</span>
                     <span className="value">{lastSessionStats.accuracy}%</span>
                   </div>
-                  <div className="result-item">
+                  <div className="stat-box">
+                    <span className="label">MAX DEPTH</span>
+                    <span className="value">{sessionMaxDepth}</span>
+                  </div>
+                  <div className="stat-box">
                     <span className="label">CLEARED</span>
                     <span className="value">{wordsCleared}</span>
                   </div>
-                  <div className="result-item">
-                    <span className="label">ERRORS</span>
-                    <span className="value">{errors}</span>
-                  </div>
                 </div>
+  
+                {lastSessionStats.newTitles.length > 0 && (
+                  <div className="new-titles-section">
+                    <p className="section-title">NEW TITLES</p>
+                    <div className="titles-badge-container-compact">
+                      {lastSessionStats.newTitles.map(t => (
+                        <span key={t} className="title-badge new-glow">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {lastSessionStats.newTitles.length > 0 && (
-                <div className="new-titles-container">
-                  <div className="new-titles-header">
-                    <span className="line"></span>
-                    <span className="new-titles-label">NEW TITLES</span>
-                    <span className="line"></span>
-                  </div>
-                  <div className="titles-badge-container">
-                    {lastSessionStats.newTitles.map(t => <span key={t} className="title-badge new">{t}</span>)}
-                  </div>
-                </div>
-              )}
             </main>
-
-            <footer>
+  
+            <footer className="result-footer">
+              <div className="button-group">
+                <button className="action-button share" onClick={handleShare}>
+                  <span className="icon">𝕏</span> Share
+                </button>
+                <button className="action-button download" onClick={handleDownloadImage} disabled={!treeImage}>
+                  <span className="icon">💾</span> Save Image
+                </button>
+              </div>
               <button
-                className="start-button share-button"
-                onClick={handleShare}
-              >
-                結果をシェア
-              </button>
-              <button
-                className="start-button back-to-title"
+                className="back-to-garden-btn"
                 onClick={() => window.dispatchEvent(new CustomEvent('request-ascension'))}
               >
-                タイトルへ戻る
+                RETURN TO GARDEN
               </button>
             </footer>
           </div>

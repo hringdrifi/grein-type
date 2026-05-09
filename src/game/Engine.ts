@@ -31,6 +31,7 @@ export class Engine {
 
         // 世界樹の芽をステージに追加
         this.stage.addChild(this.worldTree.container);
+        this.worldTree.setRenderer(this.app.renderer);
 
         // 毎フレームの更新処理を登録
         this.app.ticker.add((ticker) => {
@@ -65,6 +66,13 @@ export class Engine {
      */
     public triggerAscension(callback: () => void) {
         this.worldTree.triggerAscension(callback);
+    }
+
+    /**
+     * 現在の木をキャプチャする
+     */
+    public async captureTree(): Promise<string> {
+        return await this.worldTree.captureTreeSilhouette();
     }
 
     /**
