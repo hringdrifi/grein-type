@@ -74,7 +74,7 @@ export function OpeningScene({ onComplete }: OpeningSceneProps) {
                         muted
                         playsInline
                     >
-                        <source src="/burn.mp4" type="video/mp4" />
+                        <source src={`${import.meta.env.BASE_URL}burn.mp4`} type="video/mp4" />
                     </video>
                 )}
                 {step >= 6 && step <= 7 && (
@@ -84,7 +84,7 @@ export function OpeningScene({ onComplete }: OpeningSceneProps) {
                         muted
                         playsInline
                     >
-                        <source src="/sprout.mp4" type="video/mp4" />
+                        <source src={`${import.meta.env.BASE_URL}sprout.mp4`} type="video/mp4" />
                     </video>
                 )}
                 {/* 暗転中（step 5）は背景の黒が見える */}
