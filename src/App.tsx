@@ -204,7 +204,8 @@ function App() {
   // BGMの切り替え管理
   useEffect(() => {
     if (gameState === 'title') {
-      audioManager.playBGM('title');
+      // audioManager.playBGM('title');
+      audioManager.stopBGM();
     } else if (gameState === 'opening') {
       // オープニング内での制御に任せるが、一応止めておく
       audioManager.stopBGM();
