@@ -153,6 +153,7 @@ export class WorldTree {
     private isAscending: boolean = false;
     private ascensionProgress: number = 0;
     private time: number = 0;
+    private maxGeneration: number = 0; // 追加: 称号判定用の最大深度
     private currentInput: string = ""; // 現在の入力内容を保持
     
     public vitality: number = 60; // 木の生命力（残り時間）
@@ -208,6 +209,7 @@ export class WorldTree {
         this.animals = [];
         this.nodesContainer.removeChildren();
         this.graphics.clear();
+        this.maxGeneration = 0;
     }
 
     private spawnParticles(x: number, y: number, color: number, count: number = 10) {
@@ -545,6 +547,11 @@ export class WorldTree {
             hasMissed: false
         });
         
+        // 最大深度を更新
+        if (generation > this.maxGeneration) {
+            this.maxGeneration = generation;
+        }
+        
         if (parentIndex >= 0) {
             this.branches.push({
                 startIndex: parentIndex,
@@ -838,7 +845,9 @@ export class WorldTree {
             if (this.vitality <= 0) {
                 this.vitality = 0;
                 this.isPlaying = false;
-                window.dispatchEvent(new CustomEvent('game-over'));
+                window.dispatchEvent(new CustomEvent('game-over', { 
+                    detail: { maxDepth: this.maxGeneration } 
+                }));
             }
             
             // HUDに生命力を伝達

@@ -26,6 +26,7 @@ function App() {
     baseScore: 0,
     bonus: 0
   });
+  const [sessionMaxDepth, setSessionMaxDepth] = useState(0); // 追加: 今回のプレイの最大深度
 
   // 統計用の状態
 
@@ -101,7 +102,8 @@ function App() {
       audioManager.playSE('error');
     };
 
-    const handleGameOver = () => {
+    const handleGameOver = (e: any) => {
+      setSessionMaxDepth(e.detail?.maxDepth || 0);
       setGameState('gameover');
       audioManager.playSE('gameover');
     };
@@ -176,6 +178,7 @@ function App() {
         checkAndAddTitle('世界樹の再誕者', score >= 30000);
         checkAndAddTitle('ユグドラシルの守護者', score >= 60000);
         checkAndAddTitle('ラグナロクの覇者', score >= 100000);
+        checkAndAddTitle('一枝の探究者', sessionMaxDepth >= 15);
 
         // 累計実績
         const newTotalWords = cumulativeWords + wordsCleared;
