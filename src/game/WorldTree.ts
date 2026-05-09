@@ -2,27 +2,38 @@ import { Container, Text, TextStyle, Ticker, Graphics } from 'pixi.js';
 
 // ゲーム内に登場する単語リスト（北欧神話、自然、再生に関連する言葉）
 const WORD_DICTIONARY = [
-    // 自然・基本
-    "MAGIC", "NATURE", "LIGHT", "WATER", "FOREST", "SPIRIT", "AURA", "BLOOM", 
-    "LEAF", "ROOT", "BRANCH", "SEED", "GLOW", "FLORA", "VINE", "WIND", "EARTH",
-    "STONE", "MOSS", "PETAL", "STREAM", "RIVER", "OCEAN", "STAR", "MOON", "SUN",
-    "SKY", "CLOUD", "RAIN", "SNOW", "FROST", "ICE", "FIRE", "FLAME", "EMBER",
-    "ASH", "SMOKE", "SHADOW", "DARK", "NIGHT", "DUSK", "DAWN", "DAY", "MORNING",
+    // 挨拶・時間 (Greetings & Time)
+    "HELLO", "HI", "BYE", "GOOD", "MORNING", "AFTERNOON", "EVENING", "NIGHT", "YES", "NO", "THANK", "YOU", "SORRY", "PLEASE", "NAME", "FRIEND", "TODAY", "TOMORROW", "YESTERDAY", "WEEK", "MONTH", "YEAR", "TIME", "CLOCK", "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY",
     
-    // 北欧神話・地名・神
-    "YGGDRASIL", "VALHALLA", "ASGARD", "ODIN", "THOR", "FREYA", "LOKI", "RAGNAROK",
-    "BIFROST", "VALKYRIE", "MIDGARD", "NIFLHEIM", "MUSPELHEIM", "JOTUNHEIM", "HELHEIM",
-    "SLEIPNIR", "MJOLNIR", "GUNGNIR", "FENRIR", "JORMUNGANDR", "NIDHOGG", "RATATOSKR",
-    "MIMIR", "NORNS", "URD", "VERDANDI", "SKULD", "EINHERJAR", "DRAUPNIR",
+    // 数字 (Numbers)
+    "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY", "HUNDRED", "FIRST", "SECOND", "THIRD",
     
-    // 再生・抽象概念
-    "REBIRTH", "RENEWAL", "REGENERATE", "REVIVE", "AWAKEN", "SPROUT", "BLOSSOM",
-    "EVERGREEN", "ETERNAL", "INFINITE", "COSMOS", "UNIVERSE", "HARMONY", "BALANCE",
-    "DESTINY", "FATE", "LEGACY", "MEMORY", "ESSENCE", "WISDOM", "GENESIS",
+    // 色・形 (Colors & Shapes)
+    "RED", "BLUE", "GREEN", "YELLOW", "ORANGE", "PINK", "PURPLE", "BLACK", "WHITE", "BROWN", "GRAY", "GOLD", "SILVER", "CIRCLE", "SQUARE", "STAR", "HEART",
     
-    // 神秘・ビジュアル
-    "AURORA", "CELESTIAL", "ETHEREAL", "LUMINOUS", "RADIANT", "SHIMMER", "CRYSTAL",
-    "EMERALD", "SAPPHIRE", "ANCIENT", "TIMELESS", "MYSTIC", "PHANTOM"
+    // 動物・生き物 (Animals & Creatures)
+    "DOG", "CAT", "BIRD", "FISH", "LION", "TIGER", "BEAR", "RABBIT", "MONKEY", "HORSE", "COW", "PIG", "SHEEP", "DUCK", "CHICKEN", "SNAKE", "FROG", "BEE", "ANT", "WHALE", "SHARK", "TURTLE", "FOX", "DEER", "WOLF", "ZEBRA", "GIRAFFE", "ELEPHANT", "PANDA", "KOALA",
+    
+    // 食べ物・飲み物 (Food & Drink)
+    "APPLE", "BANANA", "ORANGE", "PEACH", "GRAPE", "MELON", "LEMON", "CHERRY", "CAKE", "BREAD", "MILK", "WATER", "TEA", "JUICE", "EGG", "RICE", "MEAT", "SOUP", "FISH", "POTATO", "TOMATO", "CARROT", "ONION", "CANDY", "COOKIE", "PIZZA", "COFFEE", "LUNCH", "DINNER",
+    
+    // 学校・教育 (School & Education)
+    "SCHOOL", "PEN", "BOOK", "DESK", "CHAIR", "BAG", "BOX", "CLASS", "STUDENT", "TEACHER", "PENCIL", "ERASER", "RULER", "NOTEBOOK", "PAPER", "COMPUTER", "PHONE", "MUSIC", "ART", "MATH", "SPORTS", "SOCCER", "BASEBALL", "TENNIS", "PIANO", "GUITAR",
+    
+    // 家・場所 (Home & Places)
+    "HOME", "ROOM", "BED", "TABLE", "DOOR", "WINDOW", "KITCHEN", "BATH", "HOUSE", "GARDEN", "PARK", "STORE", "SHOP", "STATION", "HOSPITAL", "BANK", "STREET", "ROAD", "TOWN", "CITY", "COUNTRY", "WORLD", "OFFICE", "LIBRARY", "MUSEUM",
+    
+    // 家族・人・体 (Family, People & Body)
+    "FATHER", "MOTHER", "BROTHER", "SISTER", "BABY", "BOY", "GIRL", "MAN", "WOMAN", "DOCTOR", "NURSE", "POLICE", "COOK", "PILOT", "FARMER", "SINGER", "PLAYER", "HEAD", "FACE", "HAIR", "EYE", "EAR", "NOSE", "MOUTH", "HAND", "FOOT", "ARM", "LEG", "SHOULDER", "KNEE", "FINGER",
+    
+    // 自然・天気 (Nature & Weather)
+    "SUN", "MOON", "STAR", "SKY", "CLOUD", "RAIN", "SNOW", "WIND", "SEA", "RIVER", "MOUNTAIN", "TREE", "LEAF", "FLOWER", "FOREST", "EARTH", "WOOD", "GRASS", "ROCK", "SUNNY", "CLOUDY", "RAINY", "SNOWY", "HOT", "COLD", "WARM", "COOL",
+    
+    // 動作 (Verbs)
+    "GO", "COME", "EAT", "DRINK", "PLAY", "SING", "DANCE", "RUN", "WALK", "JUMP", "SEE", "LOOK", "READ", "WRITE", "SLEEP", "WASH", "COOK", "HELP", "SMILE", "STUDY", "TEACH", "LEARN", "SPEAK", "TALK", "LISTEN", "KNOW", "THINK", "WANT", "LIKE", "LOVE", "HAVE", "USE", "TAKE", "MAKE", "BUILD", "OPEN", "CLOSE", "START", "STOP", "WAIT", "PUSH", "PULL", "BRING", "CARRY", "FLY", "SWIM", "RIDE", "BUY", "SELL",
+    
+    // 状態・形容詞 (Adjectives)
+    "HAPPY", "SAD", "ANGRY", "BIG", "SMALL", "HOT", "COLD", "NEW", "OLD", "NICE", "COOL", "CUTE", "FAST", "SLOW", "BUSY", "READY", "BEAUTIFUL", "WONDERFUL", "FAMOUS", "SPECIAL", "FAVORITE", "IMPORTANT", "DIFFICULT", "EASY", "HUNGRY", "THIRSTY", "STRONG", "WEAK", "LONG", "SHORT", "TALL", "HIGH", "LOW", "WIDE", "NEAR", "FAR", "CLEAN", "DIRTY", "DARK", "LIGHT", "RICH", "POOR"
 ];
 
 interface Attractor {
