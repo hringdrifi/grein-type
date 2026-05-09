@@ -212,6 +212,13 @@ function App() {
     }
   }, [gameState]);
 
+  // SNSシェア機能
+  const handleShare = () => {
+    const text = `Grein Type — ユグドラシルの芽 — で世界樹を育てました！\nスコア: ${score.toLocaleString()}\nWPM: ${lastSessionStats.wpm} | 正確率: ${lastSessionStats.accuracy}%\n#GreinType #タイピングゲーム\n`;
+    const url = "https://hringdrifi.github.io/grein-type/";
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase();
     if (value.length > inputValue.length) {
@@ -372,6 +379,12 @@ function App() {
             </main>
 
             <footer>
+              <button
+                className="start-button share-button"
+                onClick={handleShare}
+              >
+                結果をシェア
+              </button>
               <button
                 className="start-button back-to-title"
                 onClick={() => window.dispatchEvent(new CustomEvent('request-ascension'))}

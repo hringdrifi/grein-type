@@ -440,11 +440,24 @@ header:hover {
 .gameover-scene footer {
   display: flex;
   justify-content: center;
+  gap: 1.5rem;
   padding-bottom: 2rem;
 }
 
 .back-to-title {
   min-width: 250px;
+}
+
+.share-button {
+  background: rgba(29, 155, 240, 0.2); /* X Brand Blue hint */
+  border-color: rgba(29, 155, 240, 0.4);
+  color: #fff;
+  min-width: 200px;
+}
+
+.share-button:hover {
+  background: rgba(29, 155, 240, 0.4);
+  border-color: rgba(29, 155, 240, 0.8);
 }
 
 /* 各種UIパーツは必要に応じてpointer-events: autoを戻す */
