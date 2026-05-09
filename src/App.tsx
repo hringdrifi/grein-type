@@ -263,7 +263,7 @@ function App() {
         {gameState === 'title' && (
           <div className="scene-container title-scene">
             <header>
-              <h1 className="main-title">Yggr Type</h1>
+              <h1 className="main-title">Grein Type</h1>
               <p className="subtitle">— ユグドラシルの芽 —</p>
             </header>
 
