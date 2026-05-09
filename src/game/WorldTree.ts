@@ -234,8 +234,8 @@ export class WorldTree {
         this.isAscending = true;
         this.ascensionProgress = 0;
         
-        // 5秒かけて昇天し、完了後にコールバック（タイトル画面表示など）を呼ぶ
-        const duration = 2500; // 2.5秒
+        // エフェクト時間を短縮
+        const duration = 800; // 0.8秒
         const start = Date.now();
         
         const tick = () => {
