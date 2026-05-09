@@ -57,7 +57,7 @@ class AudioManager {
     /**
      * BGMを再生（クロスフェード付き）
      */
-    public playBGM(type: keyof typeof this.bgmUrls) {
+    public playBGM(_type: keyof typeof this.bgmUrls) {
         // 外部リソースエラー回避のため、現在BGM再生は無効化されています
         return;
     }
