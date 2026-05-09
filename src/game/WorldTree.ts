@@ -195,6 +195,7 @@ export class WorldTree {
     }
 
     public clear() {
+        this.isPlaying = false;
         this.isGardenMode = false;
         this.nodes.forEach(n => n.textSprite.destroy());
         this.nodes = [];
