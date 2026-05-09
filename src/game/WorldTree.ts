@@ -724,7 +724,7 @@ export class WorldTree {
             let p3 = 0;
             if (this.nodes.length < 5) {
                 // 序盤（0〜5ノード）
-                p2 = 0.40;
+                p2 = 0.35;
                 p3 = 0.00;
             } else if (this.nodes.length < 40) {
                 // 中盤（5〜40ノード）
