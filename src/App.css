@@ -98,7 +98,7 @@ body {
 /* ヘッダー演出 */
 header {
   text-align: center;
-  opacity: 0.7;
+  opacity: 1;
   transition: opacity 0.5s ease;
   display: flex;
   flex-direction: column;
@@ -149,8 +149,11 @@ header:hover {
   font-size: 1rem;
   margin-top: 0.5rem;
   letter-spacing: 0.8rem;
-  color: #e0f7fa; /* 白っぽい色 */
+  color: #e0f7fa;
   margin-left: 0.8rem;
+  text-shadow: 
+    0 0 8px rgba(0, 0, 0, 1),
+    0 0 15px rgba(0, 0, 0, 0.8);
 }
 
 /* タイトル画面の要素 */
