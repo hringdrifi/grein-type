@@ -11,9 +11,9 @@ class AudioManager {
     private initialized = false;
 
     private bgmUrls = {
-        opening: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Siegfrieds_funeral_march_and_finale.ogg',
-        title: 'https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13f69d2.mp3', // Ethereal Ambient
-        playing: 'https://cdn.pixabay.com/audio/2022/03/15/audio_01804d9c02.mp3' // Dark Cinematic
+        opening: '',
+        title: '',
+        playing: ''
     };
 
     constructor() {
@@ -58,39 +58,8 @@ class AudioManager {
      * BGMを再生（クロスフェード付き）
      */
     public playBGM(type: keyof typeof this.bgmUrls) {
-        if (!this.initialized) {
-            this.pendingBGM = type;
-            return;
-        }
-
-        const url = this.bgmUrls[type];
-        
-        // すでに同じBGMが流れている場合は何もしない
-        if (this.currentBGM && this.currentBGM.src === url) return;
-
-        // 既存のBGMをフェードアウト
-        if (this.currentBGM) {
-            const oldBgm = this.currentBGM;
-            let volume = this.bgmGain!.gain.value;
-            const fadeOut = setInterval(() => {
-                volume -= 0.05;
-                if (volume <= 0) {
-                    clearInterval(fadeOut);
-                    oldBgm.pause();
-                }
-            }, 50);
-        }
-
-        // 新しいBGMをセット
-        this.currentBGM = new Audio();
-        this.currentBGM.crossOrigin = 'anonymous';
-        this.currentBGM.src = url;
-        this.currentBGM.loop = true;
-        
-        const source = this.context!.createMediaElementSource(this.currentBGM);
-        source.connect(this.bgmGain!);
-        
-        this.currentBGM.play().catch(e => console.warn('BGM play failed:', e));
+        // 外部リソースエラー回避のため、現在BGM再生は無効化されています
+        return;
     }
 
     public stopBGM() {
