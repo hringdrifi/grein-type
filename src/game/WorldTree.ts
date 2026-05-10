@@ -63,7 +63,7 @@ interface Leaf {
 interface GardenAnimal {
     x: number;
     y: number;
-    type: 'raven' | 'squirrel' | 'stag' | 'horse' | 'cow' | 'snake' | 'eagle' | 'goat';
+    type: 'raven' | 'squirrel' | 'stag' | 'horse' | 'cow' | 'snake' | 'eagle' | 'goat' | 'wolf';
     opacity: number;
     targetOpacity: number;
     scale: number;
