@@ -16,6 +16,7 @@ function App() {
   const [isDamaged, setIsDamaged] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
+  const [isImeOn, setIsImeOn] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // スコアと統計
@@ -136,14 +137,20 @@ function App() {
 
     // IME入力を抑制するためのイベントリスナー
     const handleCompositionStart = () => {
+      setIsImeOn(true);
       // IME入力が始まったら即座にリセット
       setInputValue('');
       window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
     };
 
+    const handleCompositionEnd = () => {
+      setIsImeOn(false);
+    };
+
     const inputElement = inputRef.current;
     if (inputElement) {
       inputElement.addEventListener('compositionstart', handleCompositionStart);
+      inputElement.addEventListener('compositionend', handleCompositionEnd);
     }
 
     return () => {
@@ -156,6 +163,7 @@ function App() {
       window.removeEventListener('tree-captured', handleTreeCaptured);
       if (inputElement) {
         inputElement.removeEventListener('compositionstart', handleCompositionStart);
+        inputElement.removeEventListener('compositionend', handleCompositionEnd);
       }
     };
   }, [initAudio]);
@@ -454,6 +462,11 @@ function App() {
             </div>
 
             <div className="input-area">
+              {isImeOn && (
+                <div className="ime-warning">
+                  ⚠️ IMEがONになっています。半角英数に切り替えてください。
+                </div>
+              )}
               <div className="spell-label">SPELL</div>
               <input
                 ref={inputRef}

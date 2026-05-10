@@ -321,6 +321,24 @@ header:hover {
   text-shadow: 0 0 5px rgba(0,0,0,0.8);
 }
 
+.ime-warning {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid rgba(255, 68, 68, 0.5);
+  color: #ff9999;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(4px);
+  animation: shake-small 0.5s ease-in-out infinite;
+}
+
+@keyframes shake-small {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
 /* 称号バッジ */
 .titles-badge-container {
   display: flex;
