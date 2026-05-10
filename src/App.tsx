@@ -140,6 +140,11 @@ function App() {
       setTimeout(() => setIsDamaged(false), 200);
     };
 
+    const handleResetInput = () => {
+      setInputValue('');
+    };
+
+    window.addEventListener('reset-input', handleResetInput);
     window.addEventListener('clear-input', handleClear);
     window.addEventListener('update-vitality', handleUpdateVitality);
     window.addEventListener('leaf-fallen', handleLeafFallen);
@@ -152,6 +157,7 @@ function App() {
     window.addEventListener('tree-captured', handleTreeCaptured);
 
     return () => {
+      window.removeEventListener('reset-input', handleResetInput); // 追加
       window.removeEventListener('clear-input', handleClear);
       window.removeEventListener('update-vitality', handleUpdateVitality);
       window.removeEventListener('leaf-fallen', handleLeafFallen);

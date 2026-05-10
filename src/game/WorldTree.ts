@@ -1002,6 +1002,17 @@ export class WorldTree {
                     node.status = 'dead';
                     // 落葉ペナルティ！
                     this.vitality -= 5; // 5秒の強烈なダメージ
+
+                    // フォーカス中の単語が消滅した場合の処理
+                    if (node.isFocused) {
+                        // 他に同じ入力でフォーカスが維持されている単語があるかチェック
+                        const otherFocusedExists = this.nodes.some(n => n !== node && n.status === 'target' && n.isFocused);
+                        
+                        if (!otherFocusedExists) {
+                            this.currentInput = '';
+                            window.dispatchEvent(new CustomEvent('reset-input'));
+                        }
+                    }
                     
                     // 落葉エフェクトの生成
                     node.leaves.forEach(leaf => {
