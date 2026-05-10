@@ -333,6 +333,7 @@ export class WorldTree {
      * @param titlesCount 獲得している称号の数
      */
     public showGarden(titlesCount: number) {
+        titlesCount = 25; // デバッグ用：常に最大状態で表示
         this.clear();
         this.isGardenMode = true;
         this.unlockedTitlesCount = titlesCount;
