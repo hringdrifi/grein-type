@@ -338,10 +338,20 @@ function App() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // IME入力中は何もしない
-    if (isImeOn) return;
+    const rawValue = e.target.value;
+    const isComposing = (e.nativeEvent as any).isComposing;
 
-    const value = e.target.value.toUpperCase();
+    // 全角文字の混入またはIME入力中を検知
+    if (isComposing || /[^\x01-\x7E]/.test(rawValue)) {
+      if (!isImeOn) setIsImeOn(true);
+      // 入力値をクリアして PixiJS 側をリセット
+      setInputValue('');
+      window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
+      return;
+    }
+
+    // 通常の入力処理
+    const value = rawValue.toUpperCase();
     if (value.length > inputValue.length) {
       audioManager.playSE('type');
     }
@@ -477,6 +487,9 @@ function App() {
                   setIsImeOn(true);
                   setInputValue('');
                   window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
+                }}
+                onCompositionUpdate={() => {
+                  if (!isImeOn) setIsImeOn(true);
                 }}
                 onCompositionEnd={() => {
                   setIsImeOn(false);
