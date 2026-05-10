@@ -460,7 +460,7 @@ function App() {
                     unlockedTitles.length >= 19 ? '八足の馬が駆け、頂には鷲が翼を広げる。' :
                     unlockedTitles.length >= 13 ? '栗鼠のラタトスクが駆け、山羊のヘイズルーンが葉を食んでいる。' :
                     unlockedTitles.length >= 8 ? '木々の影で、牝牛や蛇たちが穏やかに過ごす。' :
-                    unlockedTitles.length >= 4 ? '枝先に小さな花が咲き、根元には雄鹿が羽を休めている。' :
+                    unlockedTitles.length >= 4 ? '枝先に小さな花が咲き、根元には雄鹿が静かに佇んでいる。' :
                     unlockedTitles.length >= 1 ? '灰の中からカラスが現れ、遠くを見つめている。' : '生命の気配は、まだない。'
                   }
                 </p>
