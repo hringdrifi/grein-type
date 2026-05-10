@@ -400,16 +400,14 @@ export class WorldTree {
                 currentLayer = growLayer(currentLayer, 0.6);
             }
 
-            // 称号19個以上: ユグドラシルの庭 (第9〜11層)
+            // 称号19個以上: ユグドラシルの庭 (第7〜8層)
             if (titlesCount >= 19) {
-                currentLayer = growLayer(currentLayer, 0.6);
                 currentLayer = growLayer(currentLayer, 0.5);
-                currentLayer = growLayer(currentLayer, 0.5);
+                currentLayer = growLayer(currentLayer, 0.4);
             }
 
-            // 称号25個以上: 悠久なる再生の地 (第12層〜)
+            // 称号25個以上: 悠久なる再生の地 (第9層〜)
             if (titlesCount >= 25) {
-                currentLayer = growLayer(currentLayer, 0.5);
                 currentLayer = growLayer(currentLayer, 0.4);
             }
 
