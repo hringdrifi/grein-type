@@ -351,6 +351,8 @@ function App() {
     }
 
     // 通常の入力処理
+    if (isImeOn) setIsImeOn(false);
+
     const value = rawValue.toUpperCase();
     if (value.length > inputValue.length) {
       audioManager.playSE('type');
