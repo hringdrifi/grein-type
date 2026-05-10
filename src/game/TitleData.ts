@@ -71,7 +71,7 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         name: '絶対の調律師',
         description: '一音の乱れもなく、完璧な旋律を奏でた。',
         hint: 'ミスなしで50単語以上をクリアする',
-        category: 'skill'
+        category: 'style'
     },
     // プレイスタイル系
     {
@@ -162,8 +162,8 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         category: 'record'
     },
     {
-        id: '時を刻む芽',
-        name: '時を刻む芽',
+        id: '終焉を拒む意志',
+        name: '終焉を拒む意志',
         description: '限られた命の中で、悠久の時を刻んだ。',
         hint: '1回のプレイで10分以上生存する',
         category: 'record'
