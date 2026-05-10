@@ -1409,23 +1409,37 @@ export class WorldTree {
             graphics.fill(fillStyle);
 
         } else if (type === 'squirrel') {
-            // 栗鼠: くるんとした尻尾と体
+            // 栗鼠 (ラタトスク): ふさふさの大きな尻尾と丸みのある体
             const s = scale; const ox = x; const oy = y;
-            // 尻尾 (大きく丸まった)
-            graphics.moveTo(ox - 5 * s * side, oy + 5 * s);
-            graphics.quadraticCurveTo(ox - 25 * s * side, oy + 10 * s, ox - 20 * s * side, oy - 15 * s);
-            graphics.quadraticCurveTo(ox - 10 * s * side, oy - 25 * s, ox + 5 * s * side, oy - 20 * s);
-            graphics.quadraticCurveTo(ox + 10 * s * side, oy - 15 * s, ox + 5 * s * side, oy - 5 * s);
-            // 胴体と頭
-            graphics.lineTo(ox + 15 * s * side, oy - 10 * s); // 耳
-            graphics.lineTo(ox + 12 * s * side, oy - 5 * s); // 頭
-            graphics.lineTo(ox + 15 * s * side, oy); // 鼻
-            graphics.lineTo(ox + 10 * s * side, oy + 5 * s); // 手
-            graphics.lineTo(ox + 5 * s * side, oy + 10 * s); // 足
-            graphics.lineTo(ox - 5 * s * side, oy + 5 * s); // 戻る
+            
+            // 尻尾 (大きく、ふっくらと丸まったふさふさの尻尾)
+            graphics.moveTo(ox - 2 * s * side, oy + 8 * s);
+            graphics.quadraticCurveTo(ox - 35 * s * side, oy + 15 * s, ox - 30 * s * side, oy - 20 * s); // 外側のカーブ
+            graphics.quadraticCurveTo(ox - 25 * s * side, oy - 45 * s, ox - 5 * s * side, oy - 35 * s); // 上部のふくらみ
+            graphics.quadraticCurveTo(ox + 5 * s * side, oy - 25 * s, ox - 2 * s * side, oy - 5 * s); // 内側のカーブ
+            graphics.quadraticCurveTo(ox - 8 * s * side, oy + 10 * s, ox - 2 * s * side, oy + 8 * s); // 付け根へ戻る
+            
+            // 胴体 (丸みを帯びたお座りポーズ)
+            graphics.moveTo(ox - 2 * s * side, oy + 8 * s);
+            graphics.quadraticCurveTo(ox - 5 * s * side, oy + 15 * s, ox + 5 * s * side, oy + 18 * s); // 背中からお尻
+            graphics.lineTo(ox + 15 * s * side, oy + 18 * s); // 足元
+            graphics.quadraticCurveTo(ox + 20 * s * side, oy + 10 * s, ox + 18 * s * side, oy + 5 * s); // お腹
+            
+            // 頭と耳
+            graphics.quadraticCurveTo(ox + 25 * s * side, oy - 5 * s, ox + 20 * s * side, oy - 12 * s); // 顔のライン
+            graphics.lineTo(ox + 22 * s * side, oy - 25 * s); // 耳1
+            graphics.lineTo(ox + 16 * s * side, oy - 15 * s); // 耳の付け根
+            graphics.lineTo(ox + 12 * s * side, oy - 24 * s); // 耳2
+            graphics.lineTo(ox + 8 * s * side, oy - 12 * s); // 後頭部
+            graphics.quadraticCurveTo(ox + 2 * s * side, oy - 5 * s, ox - 2 * s * side, oy + 8 * s); // 背中へ繋ぐ
             
             graphics.stroke(strokeStyle);
             graphics.fill(fillStyle);
+            
+            // 小さな手 (何かを持っているような仕草)
+            graphics.moveTo(ox + 12 * s * side, oy + 8 * s);
+            graphics.lineTo(ox + 16 * s * side, oy + 10 * s);
+            graphics.stroke({ width: 1.5 * s, color, alpha: opacity * 0.8 });
         } else if (type === 'stag') {
             // 雄鹿: 立派な角と体
             const s = scale; const ox = x; const oy = y;

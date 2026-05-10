@@ -172,23 +172,50 @@ header:hover {
   font-style: italic;
 }
 
+.button-group-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
 .start-button {
   background: rgba(20, 40, 50, 0.6);
   border: 1px solid rgba(170, 240, 255, 0.3);
   color: #e0f7fa;
-  padding: 0.8rem 3rem;
-  font-size: 1.2rem;
-  letter-spacing: 0.5rem;
+  padding: 1rem 5rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.8rem;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
+  text-shadow: 0 0 10px rgba(170, 240, 255, 0.3);
 }
 
 .start-button:hover {
   background: rgba(40, 80, 100, 0.8);
   border-color: rgba(170, 240, 255, 0.8);
-  box-shadow: 0 0 15px rgba(170, 240, 255, 0.3);
+  box-shadow: 0 0 25px rgba(170, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.how-to-play-btn {
+  background: transparent;
+  border: none;
+  color: rgba(170, 240, 255, 0.4);
+  padding: 0.6rem 2rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.3rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.how-to-play-btn:hover {
+  background: rgba(170, 240, 255, 0.05);
+  color: #e0f7fa;
 }
 
 /* プレイ画面のHUD */

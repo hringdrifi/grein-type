@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { GameCanvas } from './components/GameCanvas';
 import { OpeningScene } from './components/OpeningScene';
+import { HowToPlayPopup } from './components/HowToPlayPopup';
+import { CollectionPopup } from './components/CollectionPopup';
 import { audioManager } from './game/AudioManager';
 import './App.css';
 
@@ -12,6 +14,8 @@ function App() {
   const [errors, setErrors] = useState(0);
   const [wordsCleared, setWordsCleared] = useState(0);
   const [isDamaged, setIsDamaged] = useState(false);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [showCollection, setShowCollection] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // スコアと統計
@@ -130,6 +134,18 @@ function App() {
     window.addEventListener('request-ascension', handleAscensionRequest);
     window.addEventListener('tree-captured', handleTreeCaptured);
 
+    // IME入力を抑制するためのイベントリスナー
+    const handleCompositionStart = () => {
+      // IME入力が始まったら即座にリセット
+      setInputValue('');
+      window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
+    };
+
+    const inputElement = inputRef.current;
+    if (inputElement) {
+      inputElement.addEventListener('compositionstart', handleCompositionStart);
+    }
+
     return () => {
       window.removeEventListener('clear-input', handleClear);
       window.removeEventListener('update-vitality', handleUpdateVitality);
@@ -138,6 +154,9 @@ function App() {
       window.removeEventListener('game-over', handleGameOver);
       window.removeEventListener('request-ascension', handleAscensionRequest);
       window.removeEventListener('tree-captured', handleTreeCaptured);
+      if (inputElement) {
+        inputElement.removeEventListener('compositionstart', handleCompositionStart);
+      }
     };
   }, [initAudio]);
 
@@ -392,11 +411,32 @@ function App() {
                   {unlockedTitles.map(t => <span key={t} className="title-badge">{t}</span>)}
                 </div>
               </div>
-              <button className="start-button" onClick={handleStart}>
-                START
-              </button>
+              <div className="button-group-vertical">
+                <button className="start-button" onClick={handleStart}>
+                  START
+                </button>
+                <button className="how-to-play-btn" onClick={() => setShowHowToPlay(true)}>
+                  HOW TO PLAY
+                </button>
+                <button className="how-to-play-btn" onClick={() => setShowCollection(true)}>
+                  COLLECTION
+                </button>
+              </div>
             </main>
           </div>
+        )}
+
+        {/* 遊び方ポップアップ */}
+        {showHowToPlay && (
+          <HowToPlayPopup onClose={() => setShowHowToPlay(false)} />
+        )}
+
+        {/* コレクションポップアップ */}
+        {showCollection && (
+          <CollectionPopup 
+            unlockedTitles={unlockedTitles} 
+            onClose={() => setShowCollection(false)} 
+          />
         )}
 
         {/* プレイ画面（タイピング・HUD） */}
@@ -422,6 +462,11 @@ function App() {
                 autoFocus
                 placeholder=""
                 autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                inputMode="url"
+                lang="en"
                 value={inputValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}

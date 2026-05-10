@@ -1,0 +1,234 @@
+.collection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    animation: fade-in 0.4s ease-out;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.collection-content {
+    width: 90%;
+    max-width: 1000px;
+    height: 85vh;
+    background: rgba(15, 25, 35, 0.85);
+    border: 1px solid rgba(170, 240, 255, 0.2);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    animation: slide-up 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slide-up {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.collection-header {
+    padding: 2.5rem 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.collection-header h2 {
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: 0.6rem;
+    color: #e0ffff;
+    text-shadow: 0 0 20px rgba(224, 255, 255, 0.3);
+}
+
+.collection-header .subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 0.4rem;
+    color: rgba(170, 240, 255, 0.5);
+    margin-top: 0.5rem;
+}
+
+.close-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: #fff;
+}
+
+.collection-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stats-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.stats-value {
+    font-size: 1.2rem;
+    color: #ffcc00;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+}
+
+.collection-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 3rem 3rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(170, 240, 255, 0.2) transparent;
+}
+
+.collection-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.collection-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(170, 240, 255, 0.2);
+    border-radius: 10px;
+}
+
+.collection-category {
+    margin-bottom: 3.5rem;
+}
+
+.category-title {
+    font-size: 1.1rem;
+    letter-spacing: 0.2rem;
+    color: #8bb;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.8rem;
+}
+
+.category-icon {
+    font-size: 1.3rem;
+}
+
+.title-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+
+.title-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.title-card.unlocked:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(170, 240, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.title-card.locked {
+    opacity: 0.6;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.title-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.05rem;
+}
+
+.unlocked .title-name {
+    color: #ffcc00;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+}
+
+.unlocked-icon {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    animation: sparkle 2s infinite ease-in-out;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.title-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.locked .title-description {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.3;
+}
+
+.collection-footer {
+    padding: 2rem 3rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.back-btn {
+    background: rgba(170, 240, 255, 0.05);
+    border: 1px solid rgba(170, 240, 255, 0.2);
+    color: rgba(170, 240, 255, 0.8);
+    padding: 0.8rem 4rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Advent Pro', sans-serif;
+    letter-spacing: 0.3rem;
+}
+
+.back-btn:hover {
+    background: rgba(170, 240, 255, 0.15);
+    border-color: rgba(170, 240, 255, 0.5);
+    color: #fff;
+}
