@@ -25,6 +25,20 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         category: 'skill'
     },
     {
+        id: '芽吹きの予感',
+        name: '芽吹きの予感',
+        description: '世界に漂う言葉の断片を、少しずつ拾い集め始めた。',
+        hint: 'WPM 20以上を記録する',
+        category: 'skill'
+    },
+    {
+        id: '灰を穿つ者',
+        name: '灰を穿つ者',
+        description: '降りしきる灰を突き抜け、確かなリズムを刻み始めた。',
+        hint: 'WPM 40以上を記録する',
+        category: 'skill'
+    },
+    {
         id: '神速の語り手',
         name: '神速の語り手',
         description: '思考よりも早く、言葉を紡ぐ者。',
@@ -32,10 +46,24 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         category: 'skill'
     },
     {
+        id: '疾風の剪定士',
+        name: '疾風の剪定士',
+        description: 'その一打一打が、大樹の輪郭を鮮やかに描き出す。',
+        hint: 'WPM 80以上を記録する',
+        category: 'skill'
+    },
+    {
         id: '瞬きの風',
         name: '瞬きの風',
         description: 'その指先は風となり、一瞬の間に森を成す。',
         hint: 'WPM 100以上を記録する',
+        category: 'skill'
+    },
+    {
+        id: '極光の旋律',
+        name: '極光の旋律',
+        description: 'タイピングという枠を超え、世界樹と共鳴する伝説の奏者。',
+        hint: 'WPM 120以上を記録する',
         category: 'skill'
     },
     {

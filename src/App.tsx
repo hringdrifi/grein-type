@@ -178,8 +178,12 @@ function App() {
           : 0;
 
         checkAndAddTitle('灰を払う者', wordsCleared >= 10);
+        checkAndAddTitle('芽吹きの予感', wpm >= 20);
+        checkAndAddTitle('灰を穿つ者', wpm >= 40);
         checkAndAddTitle('神速の語り手', wpm >= 60);
+        checkAndAddTitle('疾風の剪定士', wpm >= 80);
         checkAndAddTitle('瞬きの風', wpm >= 100);
+        checkAndAddTitle('極光の旋律', wpm >= 120);
         checkAndAddTitle('絶対の調律師', errors === 0 && wordsCleared >= 50);
 
         // プレイスタイル系
