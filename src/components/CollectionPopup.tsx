@@ -1,4 +1,4 @@
-import { TITLE_COLLECTION, TitleInfo } from '../game/TitleData';
+import { TITLE_COLLECTION } from '../game/TitleData';
 import './CollectionPopup.css';
 
 interface CollectionPopupProps {
