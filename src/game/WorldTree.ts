@@ -459,9 +459,8 @@ export class WorldTree {
             }
         }
 
-        // レベル2: 雄鹿、牝牛、蛇
-        if (titlesCount >= 8) {
-            // 雄鹿は根元に
+        // レベル2: 雄鹿 (エイクスュルニル)
+        if (titlesCount >= 4) {
             this.animals.push({
                 x: -320, y: 50,
                 type: 'stag',
@@ -471,7 +470,10 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: -1
             });
+        }
 
+        // レベル3: 牝牛、蛇
+        if (titlesCount >= 8) {
             // 牝牛 (アウドムラ) は左側根元に
             this.animals.push({
                 x: -120, y: 100,
@@ -495,8 +497,9 @@ export class WorldTree {
             });
         }
 
-        // レベル3: 栗鼠 (ラタトスク) と 山羊 (ヘイズルーン)
+        // レベル4: 栗鼠 (ラタトスク) と 山羊 (ヘイズルーン)
         if (titlesCount >= 13) {
+            // 栗鼠
             this.animals.push({
                 x: 150, y: -200,
                 type: 'squirrel',
@@ -506,7 +509,6 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: 1
             });
-
             // 山羊 (ヘイズルーン)
             this.animals.push({
                 x: 80, y: 110,
@@ -1382,12 +1384,6 @@ export class WorldTree {
     }
 
     /**
-     * 指定した位置・角度で菱形の葉を描画する
-     */
-        graphics.fill({ color: color, alpha: alpha });
-    }
-
-    /**
      * 小さな花を十字状に描画する
      */
     private drawFlower(graphics: Graphics, x: number, y: number, size: number, phase: number) {
@@ -1407,6 +1403,9 @@ export class WorldTree {
         graphics.circle(x, y, 1.5).fill({ color: 0xffffff, alpha: alpha });
     }
 
+    /**
+     * 指定した位置・角度で菱形の葉を描画する
+     */
     private drawLeaf(graphics: Graphics, x: number, y: number, size: number, angle: number, alpha: number, color: number = 0xe0ffff) {
         const cos = Math.cos(angle);
         const sin = Math.sin(angle);
