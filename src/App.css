@@ -492,7 +492,9 @@ header:hover {
 
 /* 各種UIパーツは必要に応じてpointer-events: autoを戻す */
 .ui-layer button,
-.ui-layer input {
+.ui-layer input,
+.collection-overlay,
+.how-to-play-overlay {
   pointer-events: auto;
 }
 
