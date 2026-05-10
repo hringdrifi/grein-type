@@ -204,6 +204,15 @@
     font-style: italic;
 }
 
+.title-condition-faint {
+    font-size: 0.7rem;
+    color: rgba(170, 240, 255, 0.25);
+    margin-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.5rem;
+    letter-spacing: 0.02rem;
+}
+
 .lock-overlay {
     position: absolute;
     top: 1rem;

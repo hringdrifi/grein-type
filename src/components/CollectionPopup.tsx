@@ -55,6 +55,11 @@ export function CollectionPopup({ unlockedTitles, onClose }: CollectionPopupProp
                                                 <p className="title-description">
                                                     {unlocked ? title.description : title.hint}
                                                 </p>
+                                                {unlocked && (
+                                                    <p className="title-condition-faint">
+                                                        [{title.hint}]
+                                                    </p>
+                                                )}
                                             </div>
                                             {!unlocked && (
                                                 <div className="lock-overlay">
