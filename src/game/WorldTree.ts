@@ -63,7 +63,7 @@ interface Leaf {
 interface GardenAnimal {
     x: number;
     y: number;
-    type: 'raven' | 'squirrel' | 'stag' | 'horse' | 'cow' | 'snake' | 'eagle';
+    type: 'raven' | 'squirrel' | 'stag' | 'horse' | 'cow' | 'snake' | 'eagle' | 'goat';
     opacity: number;
     targetOpacity: number;
     scale: number;
@@ -168,6 +168,7 @@ export class WorldTree {
     
     private isPlaying: boolean = false;
     private isGardenMode: boolean = false;
+    private unlockedTitlesCount: number = 0; // 追加
     private textStyle: TextStyle;
 
     constructor() {
@@ -334,6 +335,7 @@ export class WorldTree {
     public showGarden(titlesCount: number) {
         this.clear();
         this.isGardenMode = true;
+        this.unlockedTitlesCount = titlesCount;
         this.isPlaying = false;
         this.time = 0;
         
@@ -379,26 +381,33 @@ export class WorldTree {
             currentLayer = growLayer(currentLayer, 1.0);
             currentLayer = growLayer(currentLayer, 1.0);
 
-            // 称号2個以上: さらに枝分かれ (第3層)
-            if (titlesCount >= 2) {
-                currentLayer = growLayer(currentLayer, 1.0);
-            }
-
-            // 称号4個以上: かなり茂らせる (第4〜5層)
+            // 称号4個以上: 若木 (第3〜4層)
             if (titlesCount >= 4) {
-                currentLayer = growLayer(currentLayer, 0.8);
+                currentLayer = growLayer(currentLayer, 0.9);
                 currentLayer = growLayer(currentLayer, 0.8);
             }
 
-            // 称号7個以上: 大樹の風格 (第6〜7層)
-            if (titlesCount >= 7) {
-                currentLayer = growLayer(currentLayer, 0.7);
+            // 称号8個以上: 清らかな森 (第5〜6層)
+            if (titlesCount >= 8) {
+                currentLayer = growLayer(currentLayer, 0.8);
                 currentLayer = growLayer(currentLayer, 0.7);
             }
 
-            // 称号10個以上: 真・世界樹 (第8〜10層)
-            if (titlesCount >= 10) {
+            // 称号13個以上: 生い茂る森 (第7〜8層)
+            if (titlesCount >= 13) {
+                currentLayer = growLayer(currentLayer, 0.7);
                 currentLayer = growLayer(currentLayer, 0.6);
+            }
+
+            // 称号19個以上: ユグドラシルの庭 (第9〜11層)
+            if (titlesCount >= 19) {
+                currentLayer = growLayer(currentLayer, 0.6);
+                currentLayer = growLayer(currentLayer, 0.5);
+                currentLayer = growLayer(currentLayer, 0.5);
+            }
+
+            // 称号25個以上: 悠久なる再生の地 (第12層〜)
+            if (titlesCount >= 25) {
                 currentLayer = growLayer(currentLayer, 0.5);
                 currentLayer = growLayer(currentLayer, 0.4);
             }
@@ -450,22 +459,11 @@ export class WorldTree {
             }
         }
 
-        // レベル2: 栗鼠 (ラタトスク) と 雄鹿 (エイクスュルニル)
-        if (titlesCount >= 4) {
-            // 栗鼠は枝の上に
-            this.animals.push({
-                x: 150, y: -200,
-                type: 'squirrel',
-                opacity: 0,
-                targetOpacity: 0.7,
-                scale: 0.4,
-                phase: Math.random() * Math.PI * 2,
-                side: 1
-            });
-
+        // レベル2: 雄鹿、牝牛、蛇
+        if (titlesCount >= 8) {
             // 雄鹿は根元に
             this.animals.push({
-                x: -320, y: 50, // より左へ配置
+                x: -320, y: 50,
                 type: 'stag',
                 opacity: 0,
                 targetOpacity: 0.8,
@@ -474,9 +472,9 @@ export class WorldTree {
                 side: -1
             });
 
-            // 牝牛 (アウドムラ) は左側根元にどっしりと
+            // 牝牛 (アウドムラ) は左側根元に
             this.animals.push({
-                x: -120, y: 100, // 雄鹿と被らないように調整
+                x: -120, y: 100,
                 type: 'cow',
                 opacity: 0,
                 targetOpacity: 0.6,
@@ -485,7 +483,7 @@ export class WorldTree {
                 side: 1
             });
 
-            // 蛇 (ニーズヘッグ) は右側の根に這わせる（テキストとの被りを回避）
+            // 蛇 (ニーズヘッグ)
             this.animals.push({
                 x: 160, y: 120,
                 type: 'snake',
@@ -497,8 +495,32 @@ export class WorldTree {
             });
         }
 
-        // レベル3: 八本足の馬 (スレイプニル) と 鷲 (フレズベルグ)
-        if (titlesCount >= 7) {
+        // レベル3: 栗鼠 (ラタトスク) と 山羊 (ヘイズルーン)
+        if (titlesCount >= 13) {
+            this.animals.push({
+                x: 150, y: -200,
+                type: 'squirrel',
+                opacity: 0,
+                targetOpacity: 0.7,
+                scale: 0.4,
+                phase: Math.random() * Math.PI * 2,
+                side: 1
+            });
+
+            // 山羊 (ヘイズルーン)
+            this.animals.push({
+                x: 80, y: 110,
+                type: 'goat',
+                opacity: 0,
+                targetOpacity: 0.7,
+                scale: 0.7,
+                phase: Math.random() * Math.PI * 2,
+                side: -1
+            });
+        }
+
+        // レベル4: 八本足の馬 (スレイプニル) と 鷲 (フレズベルグ)
+        if (titlesCount >= 19) {
             // スレイプニル
             this.animals.push({
                 x: 300, y: 90, // 少し上に調整
@@ -1178,6 +1200,17 @@ export class WorldTree {
                     this.drawLeaf(this.graphics, lx, ly, leaf.size, rot, node.leafOpacity * 0.7, color);
                 });
             }
+
+            // 庭モードかつ称号4個以上の場合、稀に花を咲かせる
+            if (this.isGardenMode && this.unlockedTitlesCount >= 4 && node.leaves.length > 0) {
+                // 決定論的なシード値（ノードの座標など）を用いて花の位置を決める
+                const seed = node.x * 1.5 + node.y * 2.5;
+                if (Math.abs(Math.sin(seed)) > 0.75) { // 25%の確率で花が咲く
+                    const fx = node.x + Math.cos(seed) * 20;
+                    const fy = node.y + Math.sin(seed) * 20;
+                    this.drawFlower(this.graphics, fx, fy, 4, this.time + seed);
+                }
+            }
         });
 
         // ホタル（精霊）の更新と描画
@@ -1351,6 +1384,29 @@ export class WorldTree {
     /**
      * 指定した位置・角度で菱形の葉を描画する
      */
+        graphics.fill({ color: color, alpha: alpha });
+    }
+
+    /**
+     * 小さな花を十字状に描画する
+     */
+    private drawFlower(graphics: Graphics, x: number, y: number, size: number, phase: number) {
+        const alpha = 0.6 + Math.sin(phase) * 0.4; // 優しく明滅
+        const s = size * (0.8 + Math.sin(phase * 0.5) * 0.2); // 少し揺らぐ
+        
+        graphics.moveTo(x - s, y).lineTo(x + s, y);
+        graphics.moveTo(x, y - s).lineTo(x, y + s);
+        
+        // 斜め方向も追加して八角形っぽく
+        const ds = s * 0.7;
+        graphics.moveTo(x - ds, y - ds).lineTo(x + ds, y + ds);
+        graphics.moveTo(x + ds, y - ds).lineTo(x - ds, y + ds);
+        
+        graphics.stroke({ width: 2, color: 0xffffff, alpha: alpha });
+        // 中心に光の点
+        graphics.circle(x, y, 1.5).fill({ color: 0xffffff, alpha: alpha });
+    }
+
     private drawLeaf(graphics: Graphics, x: number, y: number, size: number, angle: number, alpha: number, color: number = 0xe0ffff) {
         const cos = Math.cos(angle);
         const sin = Math.sin(angle);
@@ -1583,6 +1639,32 @@ export class WorldTree {
             graphics.moveTo(ox - 3 * s, oy - 10 * s);
             graphics.lineTo(ox, oy - 5 * s);
             graphics.lineTo(ox + 3 * s, oy - 10 * s);
+            graphics.stroke(strokeStyle);
+        } else if (type === 'goat') {
+            // 山羊 (ヘイズルーン)
+            const s = scale; const ox = x; const oy = y;
+            // 胴体
+            graphics.moveTo(ox - 20 * s * side, oy + 5 * s); // お尻
+            graphics.quadraticCurveTo(ox, oy - 10 * s, ox + 20 * s * side, oy - 5 * s); // 背中
+            graphics.lineTo(ox + 25 * s * side, oy - 20 * s); // 頭
+            graphics.lineTo(ox + 35 * s * side, oy - 15 * s); // 鼻
+            graphics.lineTo(ox + 25 * s * side, oy + 5 * s); // 首下
+            graphics.lineTo(ox - 15 * s * side, oy + 10 * s); // 腹
+            graphics.fill(fillStyle);
+
+            // 足
+            graphics.moveTo(ox - 15 * s * side, oy + 10 * s).lineTo(ox - 18 * s * side, oy + 30 * s);
+            graphics.moveTo(ox - 5 * s * side, oy + 10 * s).lineTo(ox - 8 * s * side, oy + 30 * s);
+            graphics.moveTo(ox + 10 * s * side, oy + 5 * s).lineTo(ox + 12 * s * side, oy + 30 * s);
+            graphics.moveTo(ox + 20 * s * side, oy + 5 * s).lineTo(ox + 22 * s * side, oy + 30 * s);
+
+            // 角
+            graphics.moveTo(ox + 25 * s * side, oy - 20 * s);
+            graphics.quadraticCurveTo(ox + 20 * s * side, oy - 35 * s, ox + 15 * s * side, oy - 30 * s);
+
+            // 顎髭
+            graphics.moveTo(ox + 28 * s * side, oy - 10 * s).lineTo(ox + 28 * s * side, oy);
+
             graphics.stroke(strokeStyle);
         }
     }

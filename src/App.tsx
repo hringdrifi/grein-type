@@ -444,7 +444,26 @@ function App() {
 
             <main>
               <div className="garden-status">
-                <p>世界樹の庭: {unlockedTitles.length > 5 ? '生い茂る森' : unlockedTitles.length > 0 ? '若木' : '灰の地'}</p>
+                <p className="garden-status-main">
+                  世界樹の庭: {
+                    unlockedTitles.length >= 25 ? '悠久なる再生の地' :
+                    unlockedTitles.length >= 19 ? 'ユグドラシルの庭' :
+                    unlockedTitles.length >= 13 ? '生い茂る森' :
+                    unlockedTitles.length >= 8 ? '清らかな森' :
+                    unlockedTitles.length >= 4 ? '若木' :
+                    unlockedTitles.length >= 1 ? '芽吹きの兆し' : '灰の地'
+                  }
+                </p>
+                <p className="garden-status-sub">
+                  {
+                    unlockedTitles.length >= 25 ? 'すべての生命が調律された、約束の地。' :
+                    unlockedTitles.length >= 19 ? '八足の馬が駆け、頂には鷲が翼を広げる。' :
+                    unlockedTitles.length >= 13 ? '栗鼠のラタトスクが駆け、山羊のヘイズルーンが葉を食んでいる。' :
+                    unlockedTitles.length >= 8 ? '木々の影で、鹿や牝牛たちが穏やかに過ごす。' :
+                    unlockedTitles.length >= 4 ? '枝先に小さな花が咲き、さえずりが響き始めた。' :
+                    unlockedTitles.length >= 1 ? '灰の中からカラスが現れ、遠くを見つめている。' : '生命の気配は、まだない。'
+                  }
+                </p>
                 <div className="titles-badge-container">
                   {unlockedTitles.map(t => <span key={t} className="title-badge">{t}</span>)}
                 </div>
