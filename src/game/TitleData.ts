@@ -155,6 +155,13 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         secret: true
     },
     {
+        id: '悠久を夢見る蕾',
+        name: '悠久を夢見る蕾',
+        description: '移ろいゆく時の中で、変わらぬ輝きを放ち続けた。',
+        hint: '1回のプレイで5分以上生存する',
+        category: 'record'
+    },
+    {
         id: '時を刻む芽',
         name: '時を刻む芽',
         description: '限られた命の中で、悠久の時を刻んだ。',

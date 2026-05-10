@@ -209,6 +209,7 @@ function App() {
         // 特殊条件
         const hour = new Date().getHours();
         checkAndAddTitle('夜空の観測者', hour >= 0 && hour <= 4);
+        checkAndAddTitle('悠久を夢見る蕾', durationMin >= 5);
         checkAndAddTitle('時を刻む芽', durationMin >= 10);
 
         setLastSessionStats({ wpm, accuracy, newTitles, baseScore: score, bonus });
