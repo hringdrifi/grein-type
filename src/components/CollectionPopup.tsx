@@ -12,7 +12,7 @@ export function CollectionPopup({ unlockedTitles, onClose }: CollectionPopupProp
         { id: 'style', name: '流儀の記憶', icon: '🌿' },
         { id: 'score', name: '神話の記憶', icon: '✨' },
         { id: 'record', name: '刻銘の記憶', icon: '📜' },
-        { id: 'hidden', name: '秘匿の記憶', icon: '❓' },
+        { id: 'hidden', name: '語られぬ記憶', icon: '🌑' },
     ];
 
     const isUnlocked = (titleId: string) => unlockedTitles.includes(titleId);
