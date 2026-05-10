@@ -175,5 +175,21 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         hint: '特定の系統を深く(深さ15以上)まで伸ばし続ける',
         category: 'hidden',
         secret: true
+    },
+    {
+        id: '開拓者の休息',
+        name: '開拓者の休息',
+        description: '激しい戦いの後、あなたは静かに世界樹のシルエットを眺め、その余韻に浸った。',
+        hint: 'リザルト画面で5分以上経過する',
+        category: 'hidden',
+        secret: true
+    },
+    {
+        id: '境界の守護者',
+        name: '境界の守護者',
+        description: '命の灯火が消えかけるその瞬間、あなたの指先が奇跡を紡ぎ出した。',
+        hint: '残り体力が5以下の状態で単語をクリアする',
+        category: 'hidden',
+        secret: true
     }
 ];

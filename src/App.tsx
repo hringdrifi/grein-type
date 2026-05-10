@@ -33,6 +33,8 @@ function App() {
   });
   const [sessionMaxDepth, setSessionMaxDepth] = useState(0); // 追加: 今回のプレイの最大深度
   const [treeImage, setTreeImage] = useState<string | null>(null); // 追加: キャプチャした世界樹の画像
+  const [metBoundaryGuardian, setMetBoundaryGuardian] = useState(false); // 追加: 境界の守護者フラグ
+  const vitalityRef = useRef(vitality);
 
   // 統計用の状態
 
@@ -46,6 +48,11 @@ function App() {
     const saved = localStorage.getItem('grein-titles');
     return saved ? JSON.parse(saved) : [];
   });
+
+  // 常に最新の生命力を参照するためのRef
+  useEffect(() => {
+    vitalityRef.current = vitality;
+  }, [vitality]);
 
   // オーディオ初期化の管理
   const initAudio = useCallback(async () => {
@@ -62,7 +69,7 @@ function App() {
     setScore(0);
     setTotalChars(0);
     setIsNoDecay(true);
-
+    setMetBoundaryGuardian(false);
     setStartTime(Date.now());
 
     // エンジン側の入力状態もクリア
@@ -89,6 +96,12 @@ function App() {
       setScore(prev => prev + finalWordScore);
 
       audioManager.playSE('clear');
+      
+      // 境界の守護者：残り体力が極めて低い（5以下）状態で単語をクリア
+      if (vitalityRef.current <= 5) {
+        setMetBoundaryGuardian(true);
+      }
+
       window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
     };
 
@@ -211,6 +224,7 @@ function App() {
         checkAndAddTitle('夜空の観測者', hour >= 0 && hour <= 4);
         checkAndAddTitle('悠久を夢見る蕾', durationMin >= 5);
         checkAndAddTitle('終焉を拒む意志', durationMin >= 10);
+        checkAndAddTitle('境界の守護者', metBoundaryGuardian);
 
         setLastSessionStats({ wpm, accuracy, newTitles, baseScore: score, bonus });
       }
@@ -234,6 +248,21 @@ function App() {
       audioManager.stopBGM();
     }
   }, [gameState]);
+
+  // リザルト画面での滞在時間を計測（隠し称号：開拓者の休息用）
+  useEffect(() => {
+    if (gameState !== 'gameover') return;
+
+    const timer = setTimeout(() => {
+      if (!unlockedTitles.includes('開拓者の休息')) {
+        const updated = [...unlockedTitles, '開拓者の休息'];
+        setUnlockedTitles(updated);
+        localStorage.setItem('grein-titles', JSON.stringify(updated));
+      }
+    }, 5 * 60 * 1000); // 5分
+
+    return () => clearTimeout(timer);
+  }, [gameState, unlockedTitles]);
 
   // SNSシェア機能
   const handleShare = () => {
