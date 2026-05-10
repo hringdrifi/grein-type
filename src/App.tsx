@@ -135,23 +135,8 @@ function App() {
     window.addEventListener('request-ascension', handleAscensionRequest);
     window.addEventListener('tree-captured', handleTreeCaptured);
 
-    // IME入力を抑制するためのイベントリスナー
-    const handleCompositionStart = () => {
-      setIsImeOn(true);
-      // IME入力が始まったら即座にリセット
-      setInputValue('');
-      window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
-    };
-
-    const handleCompositionEnd = () => {
-      setIsImeOn(false);
-    };
-
-    const inputElement = inputRef.current;
-    if (inputElement) {
-      inputElement.addEventListener('compositionstart', handleCompositionStart);
-      inputElement.addEventListener('compositionend', handleCompositionEnd);
-    }
+    window.addEventListener('request-ascension', handleAscensionRequest);
+    window.addEventListener('tree-captured', handleTreeCaptured);
 
     return () => {
       window.removeEventListener('clear-input', handleClear);
@@ -161,10 +146,6 @@ function App() {
       window.removeEventListener('game-over', handleGameOver);
       window.removeEventListener('request-ascension', handleAscensionRequest);
       window.removeEventListener('tree-captured', handleTreeCaptured);
-      if (inputElement) {
-        inputElement.removeEventListener('compositionstart', handleCompositionStart);
-        inputElement.removeEventListener('compositionend', handleCompositionEnd);
-      }
     };
   }, [initAudio]);
 
@@ -357,6 +338,9 @@ function App() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // IME入力中は何もしない
+    if (isImeOn) return;
+
     const value = e.target.value.toUpperCase();
     if (value.length > inputValue.length) {
       audioManager.playSE('type');
@@ -483,11 +467,21 @@ function App() {
                 value={inputValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                onBlur={(e) => {
+                 onBlur={(e) => {
                   // フォーカスが外れたら即座に戻す（プレイ中のみ）
                   if (gameState === 'playing') {
                     e.target.focus();
                   }
+                }}
+                onCompositionStart={() => {
+                  setIsImeOn(true);
+                  setInputValue('');
+                  window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
+                }}
+                onCompositionEnd={() => {
+                  setIsImeOn(false);
+                  setInputValue('');
+                  window.dispatchEvent(new CustomEvent('typing-input', { detail: '' }));
                 }}
               />
               <div className="input-stats">
