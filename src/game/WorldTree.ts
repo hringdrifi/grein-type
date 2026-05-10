@@ -523,13 +523,33 @@ export class WorldTree {
         if (titlesCount >= 19) {
             // スレイプニル
             this.animals.push({
-                x: 300, y: 90, // 少し上に調整
+                x: 300, y: 90,
                 type: 'horse',
                 opacity: 0,
                 targetOpacity: 0.9,
                 scale: 1.0,
                 phase: Math.random() * Math.PI * 2,
                 side: 1
+            });
+
+            // 狼 (ゲリとフレキ) - 馬の近くに侍る
+            this.animals.push({
+                x: 200, y: 140,
+                type: 'wolf',
+                opacity: 0,
+                targetOpacity: 0.6,
+                scale: 0.6,
+                phase: Math.random() * Math.PI * 2,
+                side: 1
+            });
+            this.animals.push({
+                x: 400, y: 140,
+                type: 'wolf',
+                opacity: 0,
+                targetOpacity: 0.6,
+                scale: 0.6,
+                phase: Math.random() * Math.PI * 2,
+                side: -1
             });
 
             // 鷲 (フレズベルグ) は木の最上部に
@@ -1673,6 +1693,30 @@ export class WorldTree {
             // 顎髭
             graphics.moveTo(ox + 28 * s * side, oy - 10 * s).lineTo(ox + 28 * s * side, oy);
 
+            graphics.stroke(strokeStyle);
+        } else if (type === 'wolf') {
+            // 狼 (ゲリとフレキ) - お座りポーズ
+            const s = scale; const ox = x; const oy = y;
+            // 胴体とお尻
+            graphics.moveTo(ox - 15 * s * side, oy + 20 * s);
+            graphics.quadraticCurveTo(ox - 25 * s * side, oy + 30 * s, ox - 10 * s * side, oy + 40 * s);
+            graphics.lineTo(ox + 15 * s * side, oy + 40 * s);
+            graphics.quadraticCurveTo(ox + 20 * s * side, oy + 10 * s, ox + 10 * s * side, oy - 10 * s); // 背中
+            graphics.fill(fillStyle);
+
+            // 頭
+            graphics.moveTo(ox + 10 * s * side, oy - 10 * s);
+            graphics.lineTo(ox + 25 * s * side, oy - 15 * s); // 鼻
+            graphics.lineTo(ox + 15 * s * side, oy - 5 * s);
+            graphics.lineTo(ox + 10 * s * side, oy - 10 * s);
+            
+            // 耳
+            graphics.moveTo(ox + 8 * s * side, oy - 15 * s).lineTo(ox + 12 * s * side, oy - 25 * s).lineTo(ox + 16 * s * side, oy - 15 * s);
+            
+            // 尻尾
+            graphics.moveTo(ox - 15 * s * side, oy + 30 * s);
+            graphics.quadraticCurveTo(ox - 40 * s * side, oy + 25 * s, ox - 35 * s * side, oy + 10 * s);
+            
             graphics.stroke(strokeStyle);
         }
     }
