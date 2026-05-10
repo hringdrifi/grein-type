@@ -419,12 +419,14 @@ function App() {
                 <button className="start-button" onClick={handleStart}>
                   START
                 </button>
-                <button className="how-to-play-btn" onClick={() => setShowHowToPlay(true)}>
-                  HOW TO PLAY
-                </button>
-                <button className="how-to-play-btn" onClick={() => setShowCollection(true)}>
-                  COLLECTION
-                </button>
+                <div className="button-group-horizontal">
+                  <button className="how-to-play-btn" onClick={() => setShowHowToPlay(true)}>
+                    HOW TO PLAY
+                  </button>
+                  <button className="how-to-play-btn" onClick={() => setShowCollection(true)}>
+                    COLLECTION
+                  </button>
+                </div>
               </div>
             </main>
           </div>

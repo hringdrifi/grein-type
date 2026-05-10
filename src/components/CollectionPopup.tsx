@@ -53,11 +53,11 @@ export function CollectionPopup({ unlockedTitles, onClose }: CollectionPopupProp
                                             </div>
                                             <div className="card-body">
                                                 <p className="title-description">
-                                                    {unlocked ? title.description : title.hint}
+                                                    {unlocked ? title.description : (title.secret ? 'その条件は、まだ誰にも知られていない。' : title.hint)}
                                                 </p>
                                                 {unlocked && (
                                                     <p className="title-condition-faint">
-                                                        [{title.hint}]
+                                                        {title.secret ? '[ この称号の獲得条件は秘匿されています ]' : `[ ${title.hint} ]`}
                                                     </p>
                                                 )}
                                             </div>

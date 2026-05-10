@@ -4,6 +4,7 @@ export interface TitleInfo {
     description: string;
     hint: string;
     category: 'skill' | 'style' | 'score' | 'record';
+    secret?: boolean;
 }
 
 export const TITLE_COLLECTION: TitleInfo[] = [
@@ -13,7 +14,8 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         name: '灰を眺める者',
         description: '一つの言葉も紡がず、静かに終焉を見届けた。',
         hint: '一度も入力せずにタイムアップを迎える',
-        category: 'skill'
+        category: 'skill',
+        secret: true
     },
     {
         id: '灰を払う者',
@@ -121,7 +123,8 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         name: '夜空の観測者',
         description: '静寂が支配する深夜、あなたは言葉を灯し続けた。',
         hint: '深夜（0時〜4時）にプレイする',
-        category: 'record'
+        category: 'record',
+        secret: true
     },
     {
         id: '時を刻む芽',
@@ -135,6 +138,7 @@ export const TITLE_COLLECTION: TitleInfo[] = [
         name: '一枝の探究者',
         description: '脇目も振らず、一つの真理を追い求めた果て。',
         hint: '特定の系統を深く(深さ15以上)まで伸ばし続ける',
-        category: 'record'
+        category: 'record',
+        secret: true
     }
 ];

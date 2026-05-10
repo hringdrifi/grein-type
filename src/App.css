@@ -180,6 +180,13 @@ header:hover {
   margin-top: 1rem;
 }
 
+.button-group-horizontal {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  width: 100%;
+}
+
 .start-button {
   background: rgba(20, 40, 50, 0.6);
   border: 1px solid rgba(170, 240, 255, 0.3);
