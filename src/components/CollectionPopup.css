@@ -151,7 +151,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 180px;
+    min-height: 150px;
 }
 
 .title-card.unlocked:hover {
@@ -218,7 +218,7 @@
     color: rgba(170, 240, 255, 0.25);
     margin-top: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 0.8rem;
+    padding-top: 0.5rem;
     letter-spacing: 0.02rem;
 }
 
