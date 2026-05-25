@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/grein-type/',
   plugins: [react()],
+  server: {
+    host: true, // ネットワーク上の他のデバイスからアクセス可能にする
+  }
 })

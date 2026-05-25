@@ -194,6 +194,7 @@ export class WorldTree {
             }
         });
 
+        (window as any).worldTree = this;
     }
 
     public setRenderer(renderer: any) {

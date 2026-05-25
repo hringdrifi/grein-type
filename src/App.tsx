@@ -3,6 +3,7 @@ import { GameCanvas } from './components/GameCanvas';
 import { OpeningScene } from './components/OpeningScene';
 import { HowToPlayPopup } from './components/HowToPlayPopup';
 import { CollectionPopup } from './components/CollectionPopup';
+import { GoogleAnalytics } from './components/GoogleAnalytics';
 import { audioManager } from './game/AudioManager';
 import './App.css';
 
@@ -416,6 +417,7 @@ function App() {
 
   return (
     <div className={`app ${isDamaged ? 'damaged' : ''}`}>
+      <GoogleAnalytics gameState={gameState} />
       {/* ゲーム描画レイヤー（PixiJS） */}
       <GameCanvas
         gameState={gameState}
