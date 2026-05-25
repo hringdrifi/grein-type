@@ -1,4 +1,5 @@
 import { Container, Text, TextStyle, Ticker, Graphics } from 'pixi.js';
+import { GARDEN_ANIMALS } from './AnimalData';
 
 // ゲーム内に登場する単語リスト（北欧神話、自然、再生に関連する言葉）
 const WORD_DICTIONARY = [
@@ -442,8 +443,13 @@ export class WorldTree {
     private addGardenAnimals(titlesCount: number) {
         this.animals = [];
         
-        // レベル1: 鴉 (フギン & ムニン)
-        if (titlesCount >= 1) {
+        const getThreshold = (id: string): number => {
+            const animal = GARDEN_ANIMALS.find(a => a.id === id);
+            return animal ? animal.unlockThreshold : 999;
+        };
+        
+        // 鴉 (フギン & ムニン)
+        if (titlesCount >= getThreshold('raven')) {
             for (let i = 0; i < 2; i++) {
                 this.animals.push({
                     x: (Math.random() - 0.5) * 600,
@@ -458,8 +464,8 @@ export class WorldTree {
             }
         }
 
-        // レベル2: 雄鹿 (エイクスュルニル)
-        if (titlesCount >= 4) {
+        // 雄鹿 (エイクスュルニル)
+        if (titlesCount >= getThreshold('stag')) {
             this.animals.push({
                 x: -320, y: 50,
                 type: 'stag',
@@ -471,9 +477,8 @@ export class WorldTree {
             });
         }
 
-        // レベル3: 牝牛、蛇
-        if (titlesCount >= 8) {
-            // 牝牛 (アウドムラ) は左側根元に
+        // 牝牛 (アウドムラ)
+        if (titlesCount >= getThreshold('cow')) {
             this.animals.push({
                 x: -120, y: 100,
                 type: 'cow',
@@ -483,8 +488,10 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: 1
             });
+        }
 
-            // 蛇 (ニーズヘッグ)
+        // 蛇 (ニーズヘッグ)
+        if (titlesCount >= getThreshold('snake')) {
             this.animals.push({
                 x: 160, y: 120,
                 type: 'snake',
@@ -496,9 +503,8 @@ export class WorldTree {
             });
         }
 
-        // レベル4: 栗鼠 (ラタトスク) と 山羊 (ヘイズルーン)
-        if (titlesCount >= 13) {
-            // 栗鼠
+        // 栗鼠 (ラタトスク)
+        if (titlesCount >= getThreshold('squirrel')) {
             this.animals.push({
                 x: 150, y: -200,
                 type: 'squirrel',
@@ -508,7 +514,10 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: 1
             });
-            // 山羊 (ヘイズルーン)
+        }
+
+        // 山羊 (ヘイズルーン)
+        if (titlesCount >= getThreshold('goat')) {
             this.animals.push({
                 x: 80, y: 110,
                 type: 'goat',
@@ -520,9 +529,8 @@ export class WorldTree {
             });
         }
 
-        // レベル4: 八本足の馬 (スレイプニル) と 鷲 (フレズベルグ)
-        if (titlesCount >= 19) {
-            // スレイプニル
+        // 八本足の馬 (スレイプニル)
+        if (titlesCount >= getThreshold('horse')) {
             this.animals.push({
                 x: 300, y: 90,
                 type: 'horse',
@@ -532,8 +540,10 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: 1
             });
+        }
 
-            // 狼 (ゲリとフレキ) - 馬の近くに侍る
+        // 狼 (ゲリとフレキ)
+        if (titlesCount >= getThreshold('wolf')) {
             this.animals.push({
                 x: 200, y: 140,
                 type: 'wolf',
@@ -552,8 +562,10 @@ export class WorldTree {
                 phase: Math.random() * Math.PI * 2,
                 side: -1
             });
+        }
 
-            // 鷲 (フレズベルグ) は木の最上部に
+        // 鷲 (フレズベルグ)
+        if (titlesCount >= getThreshold('eagle')) {
             this.animals.push({
                 x: 0, y: -450, // 見切れないように下げる
                 type: 'eagle',
