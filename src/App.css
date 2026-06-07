@@ -801,9 +801,21 @@ header:hover {
   transition: all 0.3s ease;
   z-index: 100;
   pointer-events: auto;
+  
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.github-link .github-icon {
+  transition: transform 0.3s ease;
 }
 
 .github-link:hover {
   color: rgba(170, 240, 255, 0.8);
   text-shadow: 0 0 8px rgba(170, 240, 255, 0.4);
+}
+
+.github-link:hover .github-icon {
+  transform: scale(1.1);
 }
