@@ -490,6 +490,15 @@ function App() {
                 </div>
               </div>
             </main>
+
+            <a
+              href="https://github.com/hringdrifi/grein-type"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="github-link"
+            >
+              GitHub
+            </a>
           </div>
         )}
 
